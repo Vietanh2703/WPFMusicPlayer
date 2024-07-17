@@ -1,0 +1,119 @@
+﻿<Window x:Class="MusicPlayer_Group02.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicPlayer_Group02"
+        mc:Ignorable="d"
+        Title="Music Player" Height="700" Width="1000" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Border Background="White" CornerRadius="40" MouseDown="Border_MouseDown">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+
+            <!--MENU-->
+            <Border Background="White" Grid.RowSpan="2">
+                <StackPanel Margin="0 30 0 0">
+
+                    <TextBlock Text="LIBRARY" Style="{StaticResource MenuTitle}" />
+                    <TextBox Style="{StaticResource RoundedTextBox}" Width="253" />
+
+                    <Button x:Name="HomeButton" Style="{StaticResource MenuButton}" Background="#02BE68" Foreground="White">
+                        <Grid>
+                            <TextBlock Text="Home" Visibility="Visible" Height="24" VerticalAlignment="Top"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Style="{StaticResource MenuButton}">
+                        <Grid>
+                            <TextBlock Text="Recommended" Margin="0 0 0 2"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Style="{StaticResource MenuButton}">
+                        <Grid>
+                            <TextBlock Text="Tracks" Margin="0 0 0 2"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Style="{StaticResource MenuButton}">
+                        <Grid>
+                            <TextBlock Text="Artists" Margin="0 0 0 2"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Style="{StaticResource MenuButton}">
+                        <Grid>
+                            <TextBlock Text="Albums" Margin="0 0 0 2" />
+                        </Grid>
+                    </Button>
+
+                    <Border Background="Gray" Height="1" Margin="10,5"/>
+
+                    <Button Style="{StaticResource MenuButton}">
+                        <Grid>
+                            <TextBlock Text="Account" Margin="0 0 0 2"/>
+                        </Grid>
+                    </Button>
+
+                    <Button x:Name="LogoutButton" Style="{StaticResource MenuButton}" Click="Button_Click">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="61*"/>
+                                <ColumnDefinition Width="174*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Log out" Margin="0,0,0,2" Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!--Music Section-->
+            <StackPanel Grid.Column="1" Background="White" Margin="40 60 10 0" RenderTransformOrigin="0.445,0.559">
+                <TextBlock Text="Home" Style="{StaticResource TitleText}"/>
+                <Border CornerRadius="20" Margin="0 20 0 0">
+                    <DataGrid Height="415" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                </Border>
+            </StackPanel>
+
+            <!--Player-->
+            <Border Grid.ColumnSpan="3" Background="#03BF69"  Margin="0,584,0,0" Grid.RowSpan="2">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="60" Height="60" Margin="30 0 0 0">
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="/Images/01.jpg"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <StackPanel VerticalAlignment="Center" Margin="20 0 30 0">
+                        <TextBlock Text="A Journey Of Lifetime" Foreground="White" FontSize="22" FontWeight="Bold" />
+                        <TextBlock Text="Violet" Foreground="#9AE5C3" FontSize="18" FontWeight="SemiBold" />
+                    </StackPanel>
+                    <Button Style="{StaticResource PlayerButton}">
+                        <IconPacks:PackIconMaterial Kind="SkipPrevious" Style="{StaticResource PlayerButtonIcon}" />
+                    </Button>
+                    <Button Style="{StaticResource PlayerButton}">
+                        <IconPacks:PackIconMaterial Kind="Pause" Style="{StaticResource PlayerButtonIcon}" />
+                    </Button>
+                    <Button Style="{StaticResource PlayerButton}">
+                        <IconPacks:PackIconMaterial Kind="SkipNext" Style="{StaticResource PlayerButtonIcon}" />
+                    </Button>
+                    <Slider x:Name="slider" IsSelectionRangeEnabled="True" VerticalAlignment="Center" Value="5" Width="420" SelectionEnd="{Binding ElementName=slider, Path=Value}" />
+                    <Button Style="{StaticResource PlayerButton}">
+                        <IconPacks:PackIconMaterial Kind="VolumeMedium" Margin="0 0 20 0" Style="{StaticResource PlayerButtonIcon}"/>
+                    </Button>
+                </StackPanel>
+            </Border>
+            <Button x:Name="AddSongButton" Grid.Column="1" Content="Open files" HorizontalAlignment="Left" Margin="488,60,0,0" VerticalAlignment="Top" Height="54" Width="183"/>
+        </Grid>
+    </Border>
+</Window>
