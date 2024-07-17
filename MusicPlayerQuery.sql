@@ -9,6 +9,7 @@ CREATE TABLE UserAccount (
     Username NVARCHAR(100) NOT NULL,
     Password NVARCHAR(100) NOT NULL
 );
+GO
 
 CREATE TABLE Playlist (
     PlaylistId INT PRIMARY KEY IDENTITY(1,1),
@@ -17,3 +18,9 @@ CREATE TABLE Playlist (
     Url NVARCHAR(MAX) NOT NULL,
     FOREIGN KEY (UserId) REFERENCES UserAccount(UserId)
 );
+GO
+
+INSERT INTO UserAccount(Username, Password)
+VALUES('Group02','123456');
+
+SELECT * FROM UserAccount
