@@ -41,13 +41,19 @@ namespace MusicPlayer_Group02
             PasswordHiddenBox.Visibility = Visibility.Visible;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             //If user login but email or password or both is empty
             //validation
-            if (string.IsNullOrEmpty(EmailTextBox.Text) || string.IsNullOrEmpty(PasswordHiddenBox.Password))
+            if (string.IsNullOrEmpty(EmailTextBox.Text))
             {
-                MessageBox.Show("Email or password is empty. Please fill in all fields.", "Empty fields", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Email field is empty. Please fill in all fields.", "Empty fields", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(PasswordHiddenBox.Password))
+            {
+                MessageBox.Show("Password feild is empty. Please fill in all fields.", "Empty fields", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -62,6 +68,11 @@ namespace MusicPlayer_Group02
             MainWindow main = new(this);
             main.Show();
             this.Hide();
+        }
+
+        private void QuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
