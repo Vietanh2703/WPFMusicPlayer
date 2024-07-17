@@ -7,9 +7,9 @@ namespace MusicPlayer.BLL.Services
     {
         private UserRepository _repo = new();
 
-        public UserAccount? CheckLogin(string email, string password)
+        public UserAccount? CheckLogin(string username, string password)
         { 
-            return _repo.GetAccount(email, password);
+            return _repo.GetAccount(username, password);
 
         }
     }

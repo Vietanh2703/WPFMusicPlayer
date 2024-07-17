@@ -5,9 +5,9 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicPlayer_Group02", "MusicPlayer_Group02\MusicPlayer_Group02.csproj", "{46979B60-3567-43D4-A9C4-22436FD56DBE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicPlayer.DAL", "MusicPlayer.DLL\MusicPlayer.DAL.csproj", "{2905B125-B08F-4ED0-86B1-81152CC0248E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicPlayer.BLL", "MusicPlayer.BLL\MusicPlayer.BLL.csproj", "{3E7C6358-2FC1-4900-8936-73278E857D92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPlayer.DAL", "MusicPlayer.DAL\MusicPlayer.DAL.csproj", "{53DD945E-C44C-4E3F-98C4-25BCB734B91F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{46979B60-3567-43D4-A9C4-22436FD56DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46979B60-3567-43D4-A9C4-22436FD56DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46979B60-3567-43D4-A9C4-22436FD56DBE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2905B125-B08F-4ED0-86B1-81152CC0248E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2905B125-B08F-4ED0-86B1-81152CC0248E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2905B125-B08F-4ED0-86B1-81152CC0248E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2905B125-B08F-4ED0-86B1-81152CC0248E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3E7C6358-2FC1-4900-8936-73278E857D92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3E7C6358-2FC1-4900-8936-73278E857D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E7C6358-2FC1-4900-8936-73278E857D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E7C6358-2FC1-4900-8936-73278E857D92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53DD945E-C44C-4E3F-98C4-25BCB734B91F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53DD945E-C44C-4E3F-98C4-25BCB734B91F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53DD945E-C44C-4E3F-98C4-25BCB734B91F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53DD945E-C44C-4E3F-98C4-25BCB734B91F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

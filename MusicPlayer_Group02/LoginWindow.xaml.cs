@@ -45,15 +45,9 @@ namespace MusicPlayer_Group02
         {
             //If user login but email or password or both is empty
             //validation
-            if (string.IsNullOrEmpty(EmailTextBox.Text))
+            if (string.IsNullOrEmpty(EmailTextBox.Text) || string.IsNullOrEmpty(PasswordHiddenBox.Password))
             {
-                MessageBox.Show("Email field is empty. Please fill in all fields.", "Empty fields", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            if (string.IsNullOrEmpty(PasswordHiddenBox.Password))
-            {
-                MessageBox.Show("Password feild is empty. Please fill in all fields.", "Empty fields", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Email or Password is empty. Please fill in all fields.", "Empty fields", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

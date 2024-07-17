@@ -11,7 +11,7 @@ namespace MusicPlayer.DAL.Repositories
     {
         private MusicPlayerDbContext? _context;
 
-        public UserAccount? GetAccount(string email, string password)
+        public UserAccount? GetAccount(string username, string password)
         {
             _context = new MusicPlayerDbContext();
             //return _context.UserAccounts.FirstOrDefault(delegate (UserAccount x)
@@ -26,9 +26,10 @@ namespace MusicPlayer.DAL.Repositories
             //{
             //    return x.Email == email && x.Password == password;
             //});
-            
+
             //Lambda expression
-            return _context.UserAccounts.FirstOrDefault(x => x.Email == email && x.Password == password);
+            return _context.UserAccounts.FirstOrDefault(x => x.Username == username && x.Password == password);
         }
     }
 }
+

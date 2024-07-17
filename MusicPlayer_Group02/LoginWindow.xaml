@@ -9,7 +9,7 @@
         Title="Login" Height="500" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Label Content="Welcome back" Foreground="#97E6C1" HorizontalAlignment="Center" Height="60" Margin="0,52,0,0" VerticalAlignment="Top" Width="302" FontWeight="ExtraBold" FontSize="40" HorizontalContentAlignment="Center"/>
-        <Label Content="Email" Foreground="#97E6C1" HorizontalAlignment="Left" Height="30" Margin="50,123,0,0" VerticalAlignment="Top" Width="302" FontWeight="ExtraBold" FontSize="15"/>
+        <Label Content="Username" Foreground="#97E6C1" HorizontalAlignment="Left" Height="30" Margin="50,123,0,0" VerticalAlignment="Top" Width="302" FontWeight="ExtraBold" FontSize="15"/>
         <TextBox x:Name="EmailTextBox" Style="{StaticResource EmailTextBox}" Margin="0,153,0,0" Width="374"/>
         <Label Content="Password" Foreground="#97E6C1" HorizontalAlignment="Left" Height="30" Margin="50,213,0,0" VerticalAlignment="Top" Width="302" FontWeight="ExtraBold" FontSize="15"/>
         <StackPanel >
