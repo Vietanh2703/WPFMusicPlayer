@@ -20,10 +20,13 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Home" Style="{StaticResource TitleText}" Grid.Row="0" Grid.Column="0" />
-                <Button x:Name="AddSongButton" Content="Open files" HorizontalAlignment="Right" VerticalAlignment="Top" Height="Auto" Width="183" Grid.Row="0" Grid.Column="1" Margin="20" />
+                <Button x:Name="OpenSongButton" Content="Open file" HorizontalAlignment="Right" VerticalAlignment="Top" Height="Auto" Width="183" Grid.Row="0" Grid.Column="1" Margin="20" Click="OpenSongButton_Click" />
 
                 <Border CornerRadius="20" Margin="0 20 0 0" Background="LightGray" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                    <MediaElement Source="path/to/your/media/file" Height="415" />
+                    <Grid>
+                        <MediaElement x:Name="MediaElement" Source="" Height="415" LoadedBehavior="Manual" UnloadedBehavior="Stop" MediaOpened="MediaElement_MediaOpened"/>
+                        <Image x:Name="DefaultImage" Source="/Images/01.jpg" Visibility="Collapsed" Stretch="Uniform"/>
+                    </Grid>
                 </Border>
             </Grid>
         </DataTemplate>
@@ -120,7 +123,7 @@
 
             <!--Music Section-->
             <StackPanel Grid.Column="1" Background="White" Margin="20 20 20 0" RenderTransformOrigin="0.445,0.559">
-                <ContentControl Grid.Column="1" Style="{StaticResource ContentControlStyle}" />
+                <ContentControl x:Name="MainContentControl" Grid.Column="1" Style="{StaticResource ContentControlStyle}" />
             </StackPanel>
 
             <!--Player-->
@@ -139,7 +142,7 @@
                     <Button Style="{StaticResource PlayerButton}">
                         <IconPacks:PackIconMaterial Kind="SkipPrevious" Style="{StaticResource PlayerButtonIcon}" />
                     </Button>
-                    <Button Style="{StaticResource PlayerButton}">
+                    <Button x:Name="PauseButton" Style="{StaticResource PlayerButton}" Click="PauseButton_Click">
                         <IconPacks:PackIconMaterial Kind="Pause" Style="{StaticResource PlayerButtonIcon}" />
                     </Button>
                     <Button Style="{StaticResource PlayerButton}">
