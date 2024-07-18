@@ -7,6 +7,47 @@
         xmlns:local="clr-namespace:MusicPlayer_Group02"
         mc:Ignorable="d"
         Title="Music Player" Height="700" Width="1000" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <DataTemplate x:Key="HomeTemplate">
+            <Grid Background="White" Margin="40 60 10 0" RenderTransformOrigin="0.445,0.559">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Home" Style="{StaticResource TitleText}" Grid.Row="0" Grid.Column="0" />
+                <Button x:Name="AddSongButton" Content="Open files" HorizontalAlignment="Right" VerticalAlignment="Top" Height="Auto" Width="183" Grid.Row="0" Grid.Column="1" Margin="20" />
+
+                <Border CornerRadius="20" Margin="0 20 0 0" Background="LightGray" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                    <MediaElement Source="path/to/your/media/file" Height="415" />
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AlbumsTemplate">
+            <StackPanel Background="White" Margin="20 20 20 0" RenderTransformOrigin="0.445,0.559">
+                <TextBlock Text="Albums" Style="{StaticResource TitleText}"/>
+                <Border CornerRadius="20" Margin="0 20 0 0">
+                    <DataGrid Height="415" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                </Border>
+            </StackPanel>
+        </DataTemplate>
+
+        <Style TargetType="ContentControl" x:Key="ContentControlStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedMenuItem}" Value="Home">
+                    <Setter Property="ContentTemplate" Value="{StaticResource HomeTemplate}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding SelectedMenuItem}" Value="Albums">
+                    <Setter Property="ContentTemplate" Value="{StaticResource AlbumsTemplate}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Border Background="White" CornerRadius="40" MouseDown="Border_MouseDown">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -27,31 +68,31 @@
                     <TextBlock Text="LIBRARY" Style="{StaticResource MenuTitle}" />
                     <TextBox Style="{StaticResource RoundedTextBox}" Width="253" />
 
-                    <Button x:Name="HomeButton" Style="{StaticResource MenuButton}" Background="#02BE68" Foreground="White">
+                    <Button x:Name="HomeButton" Style="{StaticResource MenuButton}" Background="#02BE68" Foreground="White" Click="HomeButton_Click">
                         <Grid>
                             <TextBlock Text="Home" Visibility="Visible" Height="24" VerticalAlignment="Top"/>
                         </Grid>
                     </Button>
 
-                    <Button Style="{StaticResource MenuButton}">
+                    <!--<Button Style="{StaticResource MenuButton}">
                         <Grid>
                             <TextBlock Text="Recommended" Margin="0 0 0 2"/>
                         </Grid>
-                    </Button>
+                    </Button>-->
 
-                    <Button Style="{StaticResource MenuButton}">
+                    <!--<Button Style="{StaticResource MenuButton}">
                         <Grid>
                             <TextBlock Text="Tracks" Margin="0 0 0 2"/>
                         </Grid>
-                    </Button>
+                    </Button>-->
 
-                    <Button Style="{StaticResource MenuButton}">
+                    <!--<Button Style="{StaticResource MenuButton}">
                         <Grid>
                             <TextBlock Text="Artists" Margin="0 0 0 2"/>
                         </Grid>
-                    </Button>
+                    </Button>-->
 
-                    <Button Style="{StaticResource MenuButton}">
+                    <Button Style="{StaticResource MenuButton}" Click="Button_Click_1">
                         <Grid>
                             <TextBlock Text="Albums" Margin="0 0 0 2" />
                         </Grid>
@@ -78,11 +119,8 @@
             </Border>
 
             <!--Music Section-->
-            <StackPanel Grid.Column="1" Background="White" Margin="40 60 10 0" RenderTransformOrigin="0.445,0.559">
-                <TextBlock Text="Home" Style="{StaticResource TitleText}"/>
-                <Border CornerRadius="20" Margin="0 20 0 0">
-                    <DataGrid Height="415" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-                </Border>
+            <StackPanel Grid.Column="1" Background="White" Margin="20 20 20 0" RenderTransformOrigin="0.445,0.559">
+                <ContentControl Grid.Column="1" Style="{StaticResource ContentControlStyle}" />
             </StackPanel>
 
             <!--Player-->
@@ -113,7 +151,7 @@
                     </Button>
                 </StackPanel>
             </Border>
-            <Button x:Name="AddSongButton" Grid.Column="1" Content="Open files" HorizontalAlignment="Left" Margin="488,60,0,0" VerticalAlignment="Top" Height="54" Width="183"/>
+            <!--<Button x:Name="AddSongButton" Grid.Column="1" Content="Open files" HorizontalAlignment="Left" Margin="488,60,0,0" VerticalAlignment="Top" Height="54" Width="183"/>-->
         </Grid>
     </Border>
 </Window>

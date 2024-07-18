@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using MusicPlayer_Group02.Components;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,10 +19,13 @@ namespace MusicPlayer_Group02
     public partial class MainWindow : Window
     {
         private LoginWindow _loginWindow;
+        private MainViewModel ViewModel { get; set; }
         public MainWindow(LoginWindow loginWindow)
         {
             InitializeComponent();
             _loginWindow = loginWindow;
+            ViewModel = new MainViewModel();
+            DataContext = ViewModel;
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -36,5 +40,14 @@ namespace MusicPlayer_Group02
             this.Close();
         }
 
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectedMenuItem = "Home";
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectedMenuItem = "Albums";
+        }
     }
 }
