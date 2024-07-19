@@ -35,6 +35,17 @@ namespace MusicPlayer.DAL.Repositories
                 _context.SaveChanges();
             } 
         }
+
+        public void Delete(Playlist song, int playlistId)
+        {
+            _context = new();
+            var existingSong = Find(playlistId);
+            if (existingSong != null)
+            {
+                _context.Playlists.Remove(existingSong);
+                _context.SaveChanges();
+            }
+        }
         public Playlist Find(int playlistId)
         {
             _context = new();

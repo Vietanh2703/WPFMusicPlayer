@@ -121,6 +121,22 @@ namespace MusicPlayer_Group02
             LoadPlaylistList(User.UserId);
         }
 
+        private void DeleteSongButton_Click(object sender, RoutedEventArgs e)
+        {
+            Playlist selected = FindChild<DataGrid>(MainContentControl, "PlaylistListDataGrid").SelectedItem as Playlist;
+            if(selected == null)
+            {
+                System.Windows.MessageBox.Show("Please select a sone to delete!", "Delete song", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            MessageBoxResult answer = System.Windows.MessageBox.Show("Do you really want to delete the selected song?", "Delete confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (answer == MessageBoxResult.No)
+                return;
+
+            _playlistService.DeleteSong(selected, selected.PlaylistId);
+            LoadPlaylistList(User.UserId);
+        }
+
         private void InitializeTimer()
         {
             timer = new DispatcherTimer();
