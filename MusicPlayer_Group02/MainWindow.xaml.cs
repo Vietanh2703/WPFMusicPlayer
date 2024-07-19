@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace MusicPlayer_Group02
 {
@@ -157,6 +158,7 @@ namespace MusicPlayer_Group02
                     // Thực hiện các thao tác với MediaElement
                     mediaElement.Source = new Uri(selectedFile);
                     mediaElement.Play();
+                    
                     PauseButton.Content = new PackIconMaterial() { Kind = PackIconMaterialKind.Pause, Style = (Style)FindResource("PlayerButtonIcon") };
                     isPlaying = true;
                     timer.Start();
@@ -201,6 +203,7 @@ namespace MusicPlayer_Group02
                 if (isPlaying)
                 {
                     // Nếu đang phát, thì dừng lại và chuyển nút sang trạng thái Play
+                    
                     mediaElement.Pause();
                     PauseButton.Content = new PackIconMaterial() { Kind = PackIconMaterialKind.Play, Style = (Style)FindResource("PlayerButtonIcon") };
                     isPlaying = false;
@@ -260,6 +263,21 @@ namespace MusicPlayer_Group02
             }
 
             return foundChild;
+        }
+
+        //Increase - Decrease Volumn
+        private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (NumberVolumeTextBlock != null && slider.Value > 0)
+            {
+                
+                var mediaElement = FindChild<MediaElement>(MainContentControl, "MediaElement");
+                if (mediaElement != null)
+                {                                   
+                        mediaElement.Volume = (slider.Value / 100);                       
+                }
+                NumberVolumeTextBlock.Text = ((int)slider.Value).ToString();
+            }
         }
     }
 }
