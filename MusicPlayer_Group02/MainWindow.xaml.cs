@@ -1,6 +1,6 @@
 ﻿using MusicPlayer.BLL.Services;
 using MusicPlayer.DAL.Entities;
-﻿using MahApps.Metro.IconPacks;
+using MahApps.Metro.IconPacks;
 using MusicPlayer_Group02.Components;
 using System.Text;
 using System.Windows;
@@ -27,7 +27,7 @@ namespace MusicPlayer_Group02
         private PlaylistService _playlistService = new();
         private bool isPlaying = false;
         private DispatcherTimer timer;
-        
+
         public UserAccount User { get; set; }
 
         public MainWindow(LoginWindow loginWindow)
@@ -106,59 +106,12 @@ namespace MusicPlayer_Group02
 
         }
 
-
-
-
-
-
-        public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
-        {
-            // Nếu không có con, trả về null
-            if (parent == null) return null;
-
-            T foundChild = null;
-
-            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < childrenCount; i++)
-            {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                // Kiểm tra xem child có phải là loại mong muốn
-                T childType = child as T;
-                if (childType == null)
-                {
-                    // Tiếp tục tìm kiếm trong cây con
-                    foundChild = FindChild<T>(child, childName);
-
-                    // Nếu tìm thấy, trả về
-                    if (foundChild != null) break;
-                }
-                else if (!string.IsNullOrEmpty(childName))
-                {
-                    var frameworkElement = child as FrameworkElement;
-                    // Nếu tên khớp, trả về
-                    if (frameworkElement != null && frameworkElement.Name == childName)
-                    {
-                        foundChild = (T)child;
-                        break;
-                    }
-                }
-                else
-                {
-                    // Nếu không có tên, trả về child đầu tiên tìm thấy
-                    foundChild = (T)child;
-                    break;
-                }
-            }
-
-            return foundChild;
-        }
-
         private void EditSongButton_Click(object sender, RoutedEventArgs e)
         {
             Playlist selected = FindChild<DataGrid>(MainContentControl, "PlaylistListDataGrid").SelectedItem as Playlist;
             if (selected == null)
             {
-                System.Windows.MessageBox.Show("Please select a song to edit!", "Edit song", MessageBoxButton.OK, MessageBoxImage.Error);                
+                System.Windows.MessageBox.Show("Please select a song to edit!", "Edit song", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             PlaylistDetailWindow detail = new();
@@ -179,9 +132,12 @@ namespace MusicPlayer_Group02
         {
             var mediaElement = FindChild<MediaElement>(MainContentControl, "MediaElement");
             var timeTextBlock = FindChild<TextBlock>(MainContentControl, "TimeTextBlock");
-            if (mediaElement.Source != null && mediaElement.NaturalDuration.HasTimeSpan)
+            if (mediaElement != null && timeTextBlock != null)
             {
-                timeTextBlock.Text = $"{mediaElement.Position.ToString(@"mm\:ss")} / {mediaElement.NaturalDuration.TimeSpan.ToString(@"mm\:ss")}";
+                if (mediaElement.Source != null && mediaElement.NaturalDuration.HasTimeSpan)
+                {
+                    timeTextBlock.Text = $"{mediaElement.Position.ToString(@"mm\:ss")} / {mediaElement.NaturalDuration.TimeSpan.ToString(@"mm\:ss")}";
+                }
             }
         }
 
