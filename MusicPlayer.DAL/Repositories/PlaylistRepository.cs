@@ -23,11 +23,22 @@ namespace MusicPlayer.DAL.Repositories
             return _context.Playlists.Where(p => p.UserId == userId).ToList();
         }
 
-        public void Update(Playlist song)
+        public void Update(Playlist song, int playlistId)
         {
             _context = new();
-            _context.Playlists.Update(song);
-            _context.SaveChanges();
+            var existingSong = Find(playlistId);
+            if (existingSong != null)
+            {
+                existingSong.SongName = song.SongName; 
+                existingSong.Url = song.Url;
+                _context.Playlists.Update(existingSong);
+                _context.SaveChanges();
+            } 
+        }
+        public Playlist Find(int playlistId)
+        {
+            _context = new();
+            return _context.Playlists.Find(playlistId);
         }
     }
 }

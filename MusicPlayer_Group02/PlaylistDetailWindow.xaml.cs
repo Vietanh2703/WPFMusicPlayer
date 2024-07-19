@@ -57,12 +57,12 @@ namespace MusicPlayer_Group02
                 song.SongName = SongNameTextBox.Text;
                 if (EditedSong ==  null)
                 {
-                    System.Windows.MessageBox.Show("NHAM ROI", DetailLabel.Content + "", MessageBoxButton.OK, MessageBoxImage.Information);
+
                     _playlistService.AddSong(song);
                 }
                 else
                 {
-                    _playlistService.UpdateSong(song);
+                    _playlistService.UpdateSong(song, EditedSong.PlaylistId);
                 }
 
                 System.Windows.MessageBox.Show(DetailLabel.Content + " successfully!", DetailLabel.Content + "", MessageBoxButton.OK, MessageBoxImage.Information);

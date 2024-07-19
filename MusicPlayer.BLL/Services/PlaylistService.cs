@@ -21,9 +21,12 @@ namespace MusicPlayer.BLL.Services
             return _repo.GetAll(userId);
         }
 
-        public void UpdateSong(Playlist song)
+
+
+        public void UpdateSong(Playlist song, int playlistId)
         {
-            _repo.Update(song);
+            _repo.Update(song, playlistId);
+
         }
     }
 }
