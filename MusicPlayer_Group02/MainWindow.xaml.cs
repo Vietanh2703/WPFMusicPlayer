@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace MusicPlayer_Group02
 {
@@ -23,9 +24,11 @@ namespace MusicPlayer_Group02
         private MainViewModel ViewModel { get; set; }
 
         private bool isPlaying = false;
+        private DispatcherTimer timer;
         public MainWindow(LoginWindow loginWindow)
         {
             InitializeComponent();
+            InitializeTimer();
             _loginWindow = loginWindow;
             ViewModel = new MainViewModel();
             DataContext = ViewModel;
@@ -53,6 +56,23 @@ namespace MusicPlayer_Group02
             ViewModel.SelectedMenuItem = "Albums";
         }
 
+        private void InitializeTimer()
+        {
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            var mediaElement = FindChild<MediaElement>(MainContentControl, "MediaElement");
+            var timeTextBlock = FindChild<TextBlock>(MainContentControl, "TimeTextBlock");
+            if (mediaElement.Source != null && mediaElement.NaturalDuration.HasTimeSpan)
+            {
+                timeTextBlock.Text = $"{mediaElement.Position.ToString(@"mm\:ss")} / {mediaElement.NaturalDuration.TimeSpan.ToString(@"mm\:ss")}";
+            }
+        }
+
         private void OpenSongButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new();
@@ -69,7 +89,9 @@ namespace MusicPlayer_Group02
                     // Thực hiện các thao tác với MediaElement
                     mediaElement.Source = new Uri(selectedFile);
                     mediaElement.Play();
+                    PauseButton.Content = new PackIconMaterial() { Kind = PackIconMaterialKind.Pause, Style = (Style)FindResource("PlayerButtonIcon") };
                     isPlaying = true;
+                    timer.Start();
                 }
                 else
                 {

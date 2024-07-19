@@ -24,8 +24,9 @@
 
                 <Border CornerRadius="20" Margin="0 20 0 0" Background="LightGray" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid>
-                        <MediaElement x:Name="MediaElement" Source="" Height="415" LoadedBehavior="Manual" UnloadedBehavior="Stop" MediaOpened="MediaElement_MediaOpened"/>
-                        <Image x:Name="DefaultImage" Source="/Images/01.jpg" Visibility="Collapsed" Stretch="Uniform"/>
+                        <MediaElement x:Name="MediaElement" Source="" Height="415" LoadedBehavior="Manual" UnloadedBehavior="Stop" MediaOpened="MediaElement_MediaOpened" Panel.ZIndex="1"/>
+                        <Image x:Name="DefaultImage" Source="/Images/01.jpg" Visibility="Collapsed" Stretch="Uniform" Panel.ZIndex="1"  Height="415"/>
+                        <TextBlock x:Name="TimeTextBlock" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10 10 10 20" Foreground="White" FontSize="16" Panel.ZIndex="2"/>
                     </Grid>
                 </Border>
             </Grid>
