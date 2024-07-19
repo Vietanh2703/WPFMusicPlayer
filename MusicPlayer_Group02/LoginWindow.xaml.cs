@@ -60,6 +60,7 @@ namespace MusicPlayer_Group02
                 return;
             }
             MainWindow main = new(this);
+            main.User = acc;
             main.Show();
             this.Hide();
         }
