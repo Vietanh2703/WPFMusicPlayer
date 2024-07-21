@@ -1,4 +1,5 @@
-﻿using MusicPlayer.DAL.Entities;
+﻿using Microsoft.Win32.SafeHandles;
+using MusicPlayer.DAL.Entities;
 using MusicPlayer.DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,11 @@ namespace MusicPlayer.BLL.Services
         {
             _repo.Update(song, playlistId);
 
+        }
+
+        public void DeleteSong(Playlist song, int playlistId)
+        {
+            _repo.Delete(song, playlistId);
         }
     }
 }
