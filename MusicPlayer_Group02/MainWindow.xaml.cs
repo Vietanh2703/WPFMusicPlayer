@@ -1,20 +1,15 @@
 ﻿using MusicPlayer.BLL.Services;
 using MusicPlayer.DAL.Entities;
 using MahApps.Metro.IconPacks;
-using MusicPlayer_Group02.Components;
-using System.Text;
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Diagnostics;
+using System.Windows.Forms;
+using MusicPlayer_Group02.Components;
 
 namespace MusicPlayer_Group02
 {
@@ -28,6 +23,8 @@ namespace MusicPlayer_Group02
         private PlaylistService _playlistService = new();
         private bool isPlaying = false;
         private DispatcherTimer timer;
+        private List<Playlist> _playlistList;
+        private int _currentSongIndex = -1;
 
         public UserAccount User { get; set; }
 
@@ -38,8 +35,15 @@ namespace MusicPlayer_Group02
             _loginWindow = loginWindow;
             ViewModel = new MainViewModel();
             DataContext = ViewModel;
+            var mediaElement = FindChild<MediaElement>(MainContentControl, "MediaElement");
+            if (mediaElement != null)
+            {
+                mediaElement.MediaEnded += MediaElement_MediaEnded;
+            }
         }
+
         public MainWindow() => InitializeComponent();
+
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -61,50 +65,37 @@ namespace MusicPlayer_Group02
 
         private void AlbumsButton_Click(object sender, RoutedEventArgs e)
         {
-            // Đặt nền cho AlbumsButton và thiết lập lại nền cho các nút khác nếu cần
-            // ko thể thay đổi truc tiếp
-            //cần chuyển đổi chuỗi màu thành một đối tượng Brush. 
-
             ViewModel.SelectedMenuItem = "Albums";
             AlbumsButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#02BE68"));
             HomeButton.ClearValue(System.Windows.Controls.Button.BackgroundProperty);
-            //FindPlaylistListDataGrid().ItemsSource = null;
-            // Đảm bảo giao diện được cập nhật trước khi thực hiện lệnh LoadPlaylistList
+
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 LoadPlaylistList(User.UserId);
             }), System.Windows.Threading.DispatcherPriority.Background);
-
         }
-
-
 
         private void LoadPlaylistList(int userId)
         {
-
-            //FindPlaylistListDataGrid().ItemsSource = null;
             var playlistListDataGrid = FindChild<DataGrid>(MainContentControl, "PlaylistListDataGrid");
 
             if (playlistListDataGrid != null)
             {
-
-                playlistListDataGrid.ItemsSource = null;
-                playlistListDataGrid.ItemsSource = _playlistService.GetAllPlaylistByUser(userId);
-
+                _playlistList = _playlistService.GetAllPlaylistByUser(userId);
+                playlistListDataGrid.ItemsSource = _playlistList;
             }
             else
             {
                 System.Windows.MessageBox.Show("Cannot found", "Error", MessageBoxButton.OK);
             }
-
         }
+
         private void AddSongButton_Click(object sender, RoutedEventArgs e)
         {
             PlaylistDetailWindow detail = new();
             detail.User = User;
             detail.ShowDialog();
             LoadPlaylistList(User.UserId);
-
         }
 
         private void EditSongButton_Click(object sender, RoutedEventArgs e)
@@ -125,9 +116,10 @@ namespace MusicPlayer_Group02
         private void DeleteSongButton_Click(object sender, RoutedEventArgs e)
         {
             Playlist selected = FindChild<DataGrid>(MainContentControl, "PlaylistListDataGrid").SelectedItem as Playlist;
-            if(selected == null)
+            if (selected == null)
             {
-                System.Windows.MessageBox.Show("Please select a sone to delete!", "Delete song", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Please select a song to delete!", "Delete song", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
             MessageBoxResult answer = System.Windows.MessageBox.Show("Do you really want to delete the selected song?", "Delete confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -171,10 +163,9 @@ namespace MusicPlayer_Group02
                 var mediaElement = FindChild<MediaElement>(MainContentControl, "MediaElement");
                 if (mediaElement != null)
                 {
-                    // Thực hiện các thao tác với MediaElement
                     mediaElement.Source = new Uri(selectedFile);
                     mediaElement.Play();
-                    
+
                     PauseButton.Content = new PackIconMaterial() { Kind = PackIconMaterialKind.Pause, Style = (Style)FindResource("PlayerButtonIcon") };
                     isPlaying = true;
                     timer.Start();
@@ -186,7 +177,6 @@ namespace MusicPlayer_Group02
             }
         }
 
-        //Bắt sk Khi MidiaElement được mở lên
         private void MediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
             var mediaElement = sender as MediaElement;
@@ -194,22 +184,18 @@ namespace MusicPlayer_Group02
 
             if (mediaElement != null && defaultImage != null)
             {
-                // Kiểm tra nếu MediaElement có video
                 if (mediaElement.NaturalVideoHeight == 0 && mediaElement.NaturalVideoWidth == 0)
                 {
-                    // Nếu không có video, hiển thị ảnh và ẩn MediaElement
                     defaultImage.Visibility = Visibility.Visible;
                     mediaElement.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
-                    // Nếu có video, hiển thị MediaElement và ẩn ảnh
                     defaultImage.Visibility = Visibility.Collapsed;
                     mediaElement.Visibility = Visibility.Visible;
                 }
             }
         }
-
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -218,15 +204,12 @@ namespace MusicPlayer_Group02
             {
                 if (isPlaying)
                 {
-                    // Nếu đang phát, thì dừng lại và chuyển nút sang trạng thái Play
-                    
                     mediaElement.Pause();
                     PauseButton.Content = new PackIconMaterial() { Kind = PackIconMaterialKind.Play, Style = (Style)FindResource("PlayerButtonIcon") };
                     isPlaying = false;
                 }
                 else
                 {
-                    // Nếu đang dừng, thì phát lại và chuyển nút sang trạng thái Pause
                     mediaElement.Play();
                     PauseButton.Content = new PackIconMaterial() { Kind = PackIconMaterialKind.Pause, Style = (Style)FindResource("PlayerButtonIcon") };
                     isPlaying = true;
@@ -238,10 +221,8 @@ namespace MusicPlayer_Group02
             }
         }
 
-        // Hàm tìm kiếm trong cây Visual
         private static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
         {
-            // Nếu không có con, trả về null
             if (parent == null) return null;
 
             T foundChild = null;
@@ -250,20 +231,15 @@ namespace MusicPlayer_Group02
             for (int i = 0; i < childrenCount; i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
-                // Kiểm tra xem child có phải là loại mong muốn
                 T childType = child as T;
                 if (childType == null)
                 {
-                    // Tiếp tục tìm kiếm trong cây con
                     foundChild = FindChild<T>(child, childName);
-
-                    // Nếu tìm thấy, trả về
                     if (foundChild != null) break;
                 }
                 else if (!string.IsNullOrEmpty(childName))
                 {
                     var frameworkElement = child as FrameworkElement;
-                    // Nếu tên khớp, trả về
                     if (frameworkElement != null && frameworkElement.Name == childName)
                     {
                         foundChild = (T)child;
@@ -272,7 +248,6 @@ namespace MusicPlayer_Group02
                 }
                 else
                 {
-                    // Nếu không có tên, trả về child đầu tiên tìm thấy
                     foundChild = (T)child;
                     break;
                 }
@@ -281,19 +256,107 @@ namespace MusicPlayer_Group02
             return foundChild;
         }
 
-        //Increase - Decrease Volumn
         private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (NumberVolumeTextBlock != null && slider.Value > 0)
             {
-                
                 var mediaElement = FindChild<MediaElement>(MainContentControl, "MediaElement");
                 if (mediaElement != null)
-                {                                   
-                        mediaElement.Volume = (slider.Value / 100);                       
+                {
+                    mediaElement.Volume = (slider.Value / 100);
                 }
                 NumberVolumeTextBlock.Text = ((int)slider.Value).ToString();
             }
         }
+
+        private void PlaylistListDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedPlaylist = (sender as DataGrid).SelectedItem as Playlist;
+            if (selectedPlaylist != null)
+            {
+                _currentSongIndex = _playlistList.IndexOf(selectedPlaylist);
+                PlaySongAtIndex(_currentSongIndex);
+            }
+        }
+
+        private void PreviousButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentSongIndex > 0)
+            {
+                _currentSongIndex--;
+                PlaySongAtIndex(_currentSongIndex);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("This is the first song.", "Information", MessageBoxButton.OK);
+            }
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentSongIndex < _playlistList.Count - 1)
+            {
+                _currentSongIndex++;
+                PlaySongAtIndex(_currentSongIndex);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("This is the last song.", "Information", MessageBoxButton.OK);
+            }
+        }
+
+        private void PlaySongAtIndex(int index)
+        {
+            if (index >= 0 && index < _playlistList.Count)
+            {
+                var song = _playlistList[index];
+                var mediaElement = FindChild<MediaElement>(MainContentControl, "MediaElement");
+
+                if (mediaElement != null)
+                {
+                    try
+                    {
+                        var uri = new Uri(song.Url, UriKind.RelativeOrAbsolute);
+                        mediaElement.Source = uri;
+                        mediaElement.Play();
+
+                        playName.Text = song.SongName;
+
+                        PauseButton.Content = new PackIconMaterial() { Kind = PackIconMaterialKind.Pause, Style = (Style)FindResource("PlayerButtonIcon") };
+                        isPlaying = true;
+                        timer.Start();
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show($"Error playing file: {ex.Message}", "Error", MessageBoxButton.OK);
+                    }
+                }
+            }
+        }
+
+
+        private void MediaElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            if (_currentSongIndex < _playlistList.Count - 1)
+            {
+                _currentSongIndex++;
+                PlaySongAtIndex(_currentSongIndex);
+            }
+            else
+            {
+                var mediaElement = FindChild<MediaElement>(MainContentControl, "MediaElement");
+                if (mediaElement != null)
+                {
+                    mediaElement.Stop();
+                    timer.Stop();
+                    isPlaying = false;
+                    PauseButton.Content = new PackIconMaterial() { Kind = PackIconMaterialKind.Play, Style = (Style)FindResource("PlayerButtonIcon") };
+                }
+            }
+        }
+
+
+
+
     }
 }
