@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
+﻿using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic.ApplicationServices;
 using MusicPlayer.BLL.Services;
 using MusicPlayer.DAL.Entities;
 using System;
@@ -56,6 +57,12 @@ namespace MusicPlayer_Group02
                 song.UserId = User.UserId;
                 
                 song.SongName = SongNameTextBox.Text;
+                if (song.Url.IsNullOrEmpty() || song.SongName.IsNullOrEmpty())
+                {
+                    System.Windows.MessageBox.Show("Song name and song file cannot be empty!", DetailLabel.Content + " error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 if (EditedSong ==  null)
                 {
 
