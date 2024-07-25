@@ -34,7 +34,8 @@ namespace MusicPlayer_Group02
         {
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Music files (*.mp3;*.wav)|*.mp3;*.wav|All files (*.*)|*.*";
+            //openFileDialog.Filter = "Music files (*.mp3;*.wav)|*.mp3;*.wav|All files (*.*)|*.*";
+            openFileDialog.Filter = "Media Files|*.mp3;*.mp4";
             var result = openFileDialog.ShowDialog();
 
             // Kiểm tra xem người dùng đã chọn file hay không

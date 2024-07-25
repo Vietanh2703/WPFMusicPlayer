@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Forms;
 using MusicPlayer_Group02.Components;
+using System.IO;
 
 namespace MusicPlayer_Group02
 {
@@ -168,6 +169,8 @@ namespace MusicPlayer_Group02
 
                     PauseButton.Content = new PackIconMaterial() { Kind = PackIconMaterialKind.Pause, Style = (Style)FindResource("PlayerButtonIcon") };
                     isPlaying = true;
+                    string songName = Path.GetFileNameWithoutExtension(selectedFile);
+                    playName.Text = songName;
                     timer.Start();
                 }
                 else

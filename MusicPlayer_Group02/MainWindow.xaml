@@ -66,7 +66,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
 
-                        <MediaElement x:Name="MediaElement" Source="" Height="415" LoadedBehavior="Manual" UnloadedBehavior="Stop" MediaEnded="MediaElement_MediaEnded" Panel.ZIndex="1"/>
+                        <MediaElement x:Name="MediaElement" Source="" Height="415" LoadedBehavior="Manual" UnloadedBehavior="Stop" MediaEnded="MediaElement_MediaEnded" Panel.ZIndex="-1"/>
 
                     </Grid>
                 </Border>
@@ -144,16 +144,16 @@
             </StackPanel>
 
             <!--Player-->
-            <Border Grid.ColumnSpan="3" Background="#03BF69"  Margin="0,584,0,0" Grid.RowSpan="2">
+            <Border Grid.ColumnSpan="2" Background="#03BF69"  Margin="0,584,0,0" Grid.RowSpan="2">
                 <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="60" Height="60" Margin="30 0 0 0">
+                    <Rectangle Width="60" Height="60" Margin="30 0 0 0" RadiusX="40" RadiusY="40">
                         <Rectangle.Fill>
                             <ImageBrush ImageSource="/Images/01.jpg"/>
                         </Rectangle.Fill>
                     </Rectangle>
 
                     <StackPanel VerticalAlignment="Center" Margin="20 0 30 0">
-                        <TextBlock x:Name="playName" Text="A Journey Of Lifetime" Foreground="White" FontSize="22" FontWeight="Bold" />
+                        <TextBlock x:Name="playName" Text="A Journey Of Lifetime" Foreground="White" FontSize="22" FontWeight="Bold" Width="316" />
                     </StackPanel>
                     <Button x:Name="PreviousButton" Style="{StaticResource PlayerButton}" Click="PreviousButton_Click">
                         <IconPacks:PackIconMaterial Kind="SkipPrevious" Style="{StaticResource PlayerButtonIcon}" />
@@ -164,10 +164,11 @@
                     <Button x:Name="NextButton" Style="{StaticResource PlayerButton}" Click="NextButton_Click">
                         <IconPacks:PackIconMaterial Kind="SkipNext" Style="{StaticResource PlayerButtonIcon}" />
                     </Button>
-                    <Slider x:Name="slider" IsSelectionRangeEnabled="True" Maximum="100" VerticalAlignment="Center" Value="50" Width="420" SelectionEnd="{Binding ElementName=slider, Path=Value}" ValueChanged="slider_ValueChanged" />
-                    <TextBlock x:Name="NumberVolumeTextBlock" Width="100" Height="31"/>
-                    <Button Style="{StaticResource PlayerButton}">
-                        <IconPacks:PackIconMaterial Kind="VolumeMedium" Margin="0 0 20 0" Style="{StaticResource PlayerButtonIcon}"/>
+                    <TextBlock Width="73" Height="31"/>
+                    <Slider x:Name="slider" IsSelectionRangeEnabled="True" Maximum="100" VerticalAlignment="Center" Value="50" Width="242" SelectionEnd="{Binding ElementName=slider, Path=Value}" ValueChanged="slider_ValueChanged" />
+                    <TextBlock x:Name="NumberVolumeTextBlock" Width="20" Height="31"/>
+                    <Button Style="{StaticResource PlayerButton}" Width="68">
+                        <IconPacks:PackIconMaterial Kind="VolumeMedium" Style="{StaticResource PlayerButtonIcon}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                 </StackPanel>
             </Border>
