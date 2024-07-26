@@ -312,6 +312,13 @@ namespace MusicPlayer_Group02
         {
             if (index >= 0 && index < _playlistList.Count)
             {
+                var songPath = _playlistList[index].Url;
+                if (!File.Exists(songPath))
+                {
+                    // File does not exist, handle the error
+                    System.Windows.MessageBox.Show($"The file at path '{songPath}' does not exist.", "File Not Found", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 var song = _playlistList[index];
                 var mediaElement = FindChild<MediaElement>(MainContentControl, "MediaElement");
 
